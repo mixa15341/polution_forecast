@@ -14,7 +14,13 @@ logger = logging.getLogger(__name__)
 st.title("Прогнозирование загрязнения воздуха")
 
 # Загрузка данных о станциях
-df = pd.read_csv('polution_data.csv')
+try:
+    df = pd.read_csv('polution_data.csv')
+    logger.info(f"Загружено {len(df)} строк данных.")
+except Exception as e:
+    logger.error(f"Ошибка при загрузке данных: {e}")
+    st.error(f"Ошибка при загрузке данных: {e}")
+
 station_codes = df['Station code'].unique()
 target_options = ['PM2.5', 'PM10', 'SO2', 'NO2', 'O3', 'CO']
 
@@ -34,13 +40,15 @@ if st.button("Прогнозировать"):
             "future_steps": future_steps
         })
 
+        # Отправка запроса с query-параметрами
+        params = {
+            "station_code": str(station_code),
+            "target_variable": target_variable,
+            "future_steps": future_steps
+        }
         response = requests.post(
             "https://polution-forecast-1.onrender.com/predict/",
-            json={
-                "station_code": str(station_code),
-                "target_variable": target_variable,
-                "future_steps": future_steps
-            }
+            params=params  # Передача параметров в query-параметрах
         )
         response.raise_for_status()
         result = response.json()
