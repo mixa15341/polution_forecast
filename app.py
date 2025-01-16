@@ -36,7 +36,7 @@ if st.button("Прогнозировать"):
             json={
                 "station_code": str(station_code),
                 "target_variable": target_variable,
-                "future_steps": str(future_steps)
+                "future_steps": future_steps
             }
         )
         response.raise_for_status()
