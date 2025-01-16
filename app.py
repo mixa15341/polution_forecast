@@ -23,7 +23,7 @@ if st.button("Прогнозировать"):
     # Отправка запроса на сервер FastAPI
     try:
         response = requests.post(
-            "https://your-render-app.onrender.com/predict/",
+            "https://polution-forecast-1.onrender.com/predict/",
             json={
                 "station_code": station_code,
                 "target_variable": target_variable,
