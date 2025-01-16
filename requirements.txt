@@ -9,3 +9,4 @@ folium
 streamlit-folium
 scikit-learn==1.6.0
 keras
+tenserflow
