@@ -8,5 +8,3 @@ requests
 folium
 streamlit-folium
 scikit-learn==1.6.0
-pydantic
-tensorflow==2.15.0
