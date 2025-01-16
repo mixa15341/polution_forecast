@@ -6,7 +6,6 @@ from fastapi.responses import JSONResponse
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import load_model
 from datetime import datetime, timedelta
 import pickle
 
