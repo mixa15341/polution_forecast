@@ -23,16 +23,16 @@ station_code = st.selectbox("Выберите станцию:", station_codes)
 target_variable = st.selectbox("Выберите целевую переменную:", target_options)
 future_steps = st.slider("Количество дней для прогноза:", 1, 60, 30)
 
-
-
 # Кнопка для запуска прогнозирования
 if st.button("Прогнозировать"):
-    print("Кнопка 'Прогнозировать' нажата")
-    # Отправка запроса на сервер FastAPI
     try:
-
-         # Логирование данных перед отправкой
+        # Логирование данных перед отправкой
         logger.info(f"Данные для отправки: station_code={station_code}, target_variable={target_variable}, future_steps={future_steps}")
+        st.write("Данные для отправки:", {
+            "station_code": station_code,
+            "target_variable": target_variable,
+            "future_steps": future_steps
+        })
 
         response = requests.post(
             "https://polution-forecast-1.onrender.com/predict/",
@@ -43,14 +43,11 @@ if st.button("Прогнозировать"):
             }
         )
         response.raise_for_status()
-
-        # Получение и отображение результата
         result = response.json()
         logger.info(f"Результат: {result}")
         st.write("Результат:", result)
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Ошибка при отправке запроса: {e}")
-        st.write("Ответ сервера:", response.text)
+
+        # Обработка результата
         future_dates = result["future_dates"]
         predictions = result["predictions"]
 
@@ -93,6 +90,10 @@ if st.button("Прогнозировать"):
         folium_static(m)
 
     except requests.exceptions.RequestException as e:
+        logger.error(f"Ошибка при отправке запроса: {e}")
+        logger.error(f"Ответ сервера: {response.text}")  # Вывод текста ответа в терминал
         st.error(f"Ошибка при отправке запроса: {e}")
+        st.write("Ответ сервера:", response.text)  # Вывод текста ответа в интерфейс
     except ValueError as e:
+        logger.error(f"Ошибка при обработке ответа: {e}")
         st.error(f"Ошибка при обработке ответа: {e}")
