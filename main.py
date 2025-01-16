@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Отключаем GPU
+
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import numpy as np
@@ -16,6 +19,11 @@ with open('best_model.pkl', 'rb') as f:
 with open('scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
+# Обработчик для корневого пути
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Pollution Prediction API!"}
+
 # Функция для создания временного ряда
 def create_dataset(data, look_back=5):
     X, Y = [], []
@@ -28,8 +36,8 @@ def create_dataset(data, look_back=5):
 @app.post("/predict/")
 async def predict(station_code: str, target_variable: str, future_steps: int = 30):
     try:
-        # Загрузка данных (в реальном проекте данные могут быть из базы данных или файла)
-        df = pd.read_csv('pollution_data.csv')  # Пример файла с данными
+        # Загрузка данных
+        df = pd.read_csv('pollution_data.csv')
         filtered_df = df[df['Station code'] == station_code]
 
         # Преобразование в временной ряд

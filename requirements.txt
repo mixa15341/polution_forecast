@@ -1,11 +1,11 @@
-fastapi
-uvicorn
-numpy
-pandas
-scikit-learn
-tensorflow
-streamlit
-matplotlib
-requests
-folium
-streamlit-folium
+fastapi==0.95.2
+uvicorn==0.22.0
+numpy==1.24.3
+pandas==2.0.1
+scikit-learn==1.6.0  # Убедитесь, что версия совпадает с той, что использовалась при обучении
+tensorflow==2.12.0
+streamlit==1.23.1
+matplotlib==3.7.1
+requests==2.30.0
+folium==0.14.0
+streamlit-folium==0.11.0
