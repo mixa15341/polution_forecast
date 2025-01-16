@@ -41,14 +41,13 @@ if st.button("Прогнозировать"):
         })
 
         # Отправка запроса с query-параметрами
-        params = {
-            "station_code": str(station_code),
-            "target_variable": target_variable,
-            "future_steps": future_steps
-        }
         response = requests.post(
             "https://polution-forecast-1.onrender.com/predict/",
-            params=params  # Передача параметров в query-параметрах
+            params={
+                "station_code": station_code,
+                "target_variable": target_variable,
+                "future_steps": future_steps
+            }
         )
         response.raise_for_status()
         result = response.json()
