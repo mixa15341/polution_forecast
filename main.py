@@ -15,11 +15,6 @@ with open('best_model.pkl', 'rb') as f:
 with open('scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
-# Обработчик для корневого пути
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to the Pollution Prediction API!"}
-
 # Функция для создания временного ряда
 def create_dataset(data, look_back=5):
     X, Y = [], []
