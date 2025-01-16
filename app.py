@@ -24,6 +24,13 @@ future_steps = st.slider("Количество дней для прогноза:
 if st.button("Прогнозировать"):
     # Отправка запроса на сервер FastAPI
     try:
+        # Логирование данных перед отправкой
+        st.write("Данные для отправки:", {
+            "station_code": station_code,
+            "target_variable": target_variable,
+            "future_steps": future_steps
+        })
+
         response = requests.post(
             "https://polution-forecast-1.onrender.com/predict/",
             json={
@@ -36,6 +43,10 @@ if st.button("Прогнозировать"):
 
         # Получение и отображение результата
         result = response.json()
+        st.write("Результат:", result)
+    except requests.exceptions.RequestException as e:
+        st.error(f"Ошибка при отправке запроса: {e}")
+        st.write("Ответ сервера:", response.text)
         future_dates = result["future_dates"]
         predictions = result["predictions"]
 
