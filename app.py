@@ -23,8 +23,11 @@ station_code = st.selectbox("Выберите станцию:", station_codes)
 target_variable = st.selectbox("Выберите целевую переменную:", target_options)
 future_steps = st.slider("Количество дней для прогноза:", 1, 60, 30)
 
+
+
 # Кнопка для запуска прогнозирования
 if st.button("Прогнозировать"):
+    print("Кнопка 'Прогнозировать' нажата")
     # Отправка запроса на сервер FastAPI
     try:
 
