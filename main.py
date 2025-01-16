@@ -1,6 +1,3 @@
-import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Отключаем GPU
-
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import numpy as np
