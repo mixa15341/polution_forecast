@@ -1,0 +1,12 @@
+%%writefile requirements.txt
+fastapi
+uvicorn
+numpy
+pandas
+scikit-learn
+tensorflow
+streamlit
+matplotlib
+requests
+folium
+streamlit-folium
