@@ -4,8 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import folium
 from streamlit_folium import folium_static
+import logging
 
-
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Заголовок приложения
 st.title("Прогнозирование загрязнения воздуха")
@@ -24,12 +27,9 @@ future_steps = st.slider("Количество дней для прогноза:
 if st.button("Прогнозировать"):
     # Отправка запроса на сервер FastAPI
     try:
-        # Логирование данных перед отправкой
-        st.write("Данные для отправки:", {
-            "station_code": station_code,
-            "target_variable": target_variable,
-            "future_steps": future_steps
-        })
+
+         # Логирование данных перед отправкой
+        logger.info(f"Данные для отправки: station_code={station_code}, target_variable={target_variable}, future_steps={future_steps}")
 
         response = requests.post(
             "https://polution-forecast-1.onrender.com/predict/",
@@ -43,9 +43,10 @@ if st.button("Прогнозировать"):
 
         # Получение и отображение результата
         result = response.json()
+        logger.info(f"Результат: {result}")
         st.write("Результат:", result)
     except requests.exceptions.RequestException as e:
-        st.error(f"Ошибка при отправке запроса: {e}")
+        logger.error(f"Ошибка при отправке запроса: {e}")
         st.write("Ответ сервера:", response.text)
         future_dates = result["future_dates"]
         predictions = result["predictions"]
